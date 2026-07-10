@@ -518,7 +518,7 @@ export default function CalendarPage() {
                         className={`slot-card ${finalUnavailable ? 'slot-taken' : 'slot-available'}`}
                         onClick={() => { if (!finalUnavailable) openSlotModal(day, hour); }}
                       >
-                        <div className="slot-time">{formatSlotTimeRange(hour)}</div>
+                        <div className="slot-time">{formatSlotTimeRange(hour, day)}</div>
                         <div className="slot-status desktop-only-badge">
                           <span className={`status-badge ${badgeClass}`}>{badgeText}</span>
                         </div>

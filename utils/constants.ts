@@ -127,17 +127,36 @@ export function validateTC(tc: string): boolean {
   return true;
 }
 
-export function formatSlotTimeRange(hour: number): string {
-  if (hour === 22) {
+export function isWeekend(dateInput: Date | string | undefined): boolean {
+  if (!dateInput) return false;
+  if (dateInput instanceof Date) {
+    const day = dateInput.getDay();
+    return day === 0 || day === 6;
+  }
+  const parts = dateInput.split('-');
+  if (parts.length === 3) {
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10) - 1;
+    const d = parseInt(parts[2], 10);
+    const date = new Date(y, m, d);
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  }
+  return false;
+}
+
+export function formatSlotTimeRange(hour: number, date?: Date | string): string {
+  if (hour === 22 && !isWeekend(date)) {
     return '22:30 – 23:30';
   }
   return `${String(hour).padStart(2, '0')}:00 – ${String(hour + 1).padStart(2, '0')}:00`;
 }
 
-export function formatSlotStartHour(hour: number): string {
-  if (hour === 22) {
+export function formatSlotStartHour(hour: number, date?: Date | string): string {
+  if (hour === 22 && !isWeekend(date)) {
     return '22:30';
   }
   return `${String(hour).padStart(2, '0')}:00`;
 }
+
 

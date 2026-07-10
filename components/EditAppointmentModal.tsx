@@ -118,7 +118,7 @@ export default function EditAppointmentModal({
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize: '13px', color: 'var(--gray-500)', fontWeight: 500, textTransform: 'uppercase' }}>Randevu Bilgisi</span>
             <span style={{ fontSize: '16px', color: 'var(--gray-800)', fontWeight: 600 }}>
-              {displayDate} — {formatSlotStartHour(appointment.saat)}
+              {displayDate} — {formatSlotStartHour(appointment.saat, appointment.tarih)}
             </span>
           </div>
           <div style={{ width: '1px', height: '30px', background: 'var(--gray-300)' }}></div>

@@ -157,7 +157,7 @@ export default function MyAppointmentsModal({
                       <div className="randevu-day">{gunLabel}</div>
                     </div>
                     <div className="randevu-card-body">
-                      <div className="randevu-time">⏰ {formatSlotTimeRange(a.saat)}</div>
+                      <div className="randevu-time">⏰ {formatSlotTimeRange(a.saat, a.tarih)}</div>
                       <div className="randevu-cat">{a.kategori === 'basketbol' ? '🏀 Basketbol' : '🏐 Voleybol'}</div>
                     </div>
                     <div className={`randevu-badge ${a.is_archived ? 'badge-archive' : (isPast ? 'badge-past' : 'badge-upcoming')}`}>

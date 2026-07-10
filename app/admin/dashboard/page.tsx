@@ -768,7 +768,7 @@ export default function AdminDashboardPage() {
 
         const [y, m, d] = appt.tarih.split('-');
         const formattedDate = `${d}.${m}.${y}`;
-        const formattedTime = formatSlotTimeRange(appt.saat);
+        const formattedTime = formatSlotTimeRange(appt.saat, appt.tarih);
         const categoryText = appt.kategori.toUpperCase();
 
         let tableRowsHtml = '';
@@ -1045,7 +1045,7 @@ export default function AdminDashboardPage() {
       const isBooked = existingAppt && existingAppt.id !== postponeApptId;
       const isClosed = isDayClosed(postponeDate) || isSlotClosedStr(postponeDate, h);
       const isPast = new Date(`${postponeDate}T${String(h).padStart(2, '0')}:00:00`) < new Date();
-      let label = formatSlotTimeRange(h);
+      let label = formatSlotTimeRange(h, postponeDate);
       if (isPast) label += ' (Geçmiş)';
       else if (isBooked) label += ' (Dolu)';
       else if (isClosed) label += ' (Kapalı)';
@@ -1148,7 +1148,7 @@ export default function AdminDashboardPage() {
           <div className="ag-row ag-header-row">
             <div className="ag-day-cell ag-header-cell">Gün / Saat</div>
             {HOURS.map(h => (
-              <div key={h} className="ag-slot-cell ag-header-cell">{formatSlotStartHour(h)}</div>
+              <div key={h} className="ag-slot-cell ag-header-cell">{h === 22 ? '22:00 / 22:30' : formatSlotStartHour(h)}</div>
             ))}
           </div>
 
@@ -1251,7 +1251,7 @@ export default function AdminDashboardPage() {
                 <div className="appt-info-section">
                   <div className="appt-info-title">📅 Randevu</div>
                   <div className="appt-info-row"><span>Tarih:</span> <strong>{d} {TURKISH_MONTHS[parseInt(m) - 1]} {y}</strong></div>
-                  <div className="appt-info-row"><span>Saat:</span>  <strong>{formatSlotTimeRange(apptDetail.saat)}</strong></div>
+                  <div className="appt-info-row"><span>Saat:</span>  <strong>{formatSlotTimeRange(apptDetail.saat, apptDetail.tarih)}</strong></div>
                   <div className="appt-info-row"><span>Spor:</span>  <strong>{apptDetail.kategori === 'basketbol' ? '🏀 Basketbol' : '🏐 Voleybol'}</strong></div>
                   <div className="appt-info-row"><span>Durum:</span>
                     <span className={`appt-status-badge ${isPast ? 'past' : 'upcoming'}`}>{isPast ? 'Geçmiş' : 'Yakında'}</span>
@@ -1576,7 +1576,7 @@ export default function AdminDashboardPage() {
                       <strong>Yedeklenen Randevular ({backedUpAppointments.length} adet):</strong>
                       <ul style={{ paddingLeft: '18px', marginTop: '6px', marginBottom: '0', color: 'var(--gray-300)' }}>
                         {backedUpAppointments.slice(0, 10).map((a, i) => (
-                          <li key={i}>📅 {a.tarih} — Saat {formatSlotStartHour(a.saat)} ({a.kategori === 'basketbol' ? '🏀 Basketbol' : '🏐 Voleybol'})</li>
+                          <li key={i}>📅 {a.tarih} — Saat {formatSlotStartHour(a.saat, a.tarih)} ({a.kategori === 'basketbol' ? '🏀 Basketbol' : '🏐 Voleybol'})</li>
                         ))}
                         {backedUpAppointments.length > 10 && <li>... ve {backedUpAppointments.length - 10} adet daha.</li>}
                       </ul>
