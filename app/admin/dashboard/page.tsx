@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { TURKISH_DAYS, TURKISH_MONTHS, formatDate, getCurrentWeekMonday, getActiveWeekMonday, isWeekTransitionPreview, getWeekDaysFromMonday } from '@/utils/constants';
+import { TURKISH_DAYS, TURKISH_MONTHS, formatDate, getCurrentWeekMonday, getActiveWeekMonday, isWeekTransitionPreview, getWeekDaysFromMonday, formatSlotTimeRange, formatSlotStartHour } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
@@ -768,7 +768,7 @@ export default function AdminDashboardPage() {
 
         const [y, m, d] = appt.tarih.split('-');
         const formattedDate = `${d}.${m}.${y}`;
-        const formattedTime = `${String(appt.saat).padStart(2, '0')}:00 – ${String(appt.saat + 1).padStart(2, '0')}:00`;
+        const formattedTime = formatSlotTimeRange(appt.saat);
         const categoryText = appt.kategori.toUpperCase();
 
         let tableRowsHtml = '';
@@ -1045,7 +1045,7 @@ export default function AdminDashboardPage() {
       const isBooked = existingAppt && existingAppt.id !== postponeApptId;
       const isClosed = isDayClosed(postponeDate) || isSlotClosedStr(postponeDate, h);
       const isPast = new Date(`${postponeDate}T${String(h).padStart(2, '0')}:00:00`) < new Date();
-      let label = `${String(h).padStart(2, '0')}:00 – ${String(h + 1).padStart(2, '0')}:00`;
+      let label = formatSlotTimeRange(h);
       if (isPast) label += ' (Geçmiş)';
       else if (isBooked) label += ' (Dolu)';
       else if (isClosed) label += ' (Kapalı)';
@@ -1148,7 +1148,7 @@ export default function AdminDashboardPage() {
           <div className="ag-row ag-header-row">
             <div className="ag-day-cell ag-header-cell">Gün / Saat</div>
             {HOURS.map(h => (
-              <div key={h} className="ag-slot-cell ag-header-cell">{String(h).padStart(2, '0')}:00</div>
+              <div key={h} className="ag-slot-cell ag-header-cell">{formatSlotStartHour(h)}</div>
             ))}
           </div>
 
@@ -1251,7 +1251,7 @@ export default function AdminDashboardPage() {
                 <div className="appt-info-section">
                   <div className="appt-info-title">📅 Randevu</div>
                   <div className="appt-info-row"><span>Tarih:</span> <strong>{d} {TURKISH_MONTHS[parseInt(m) - 1]} {y}</strong></div>
-                  <div className="appt-info-row"><span>Saat:</span>  <strong>{String(apptDetail.saat).padStart(2, '0')}:00 – {String(apptDetail.saat + 1).padStart(2, '0')}:00</strong></div>
+                  <div className="appt-info-row"><span>Saat:</span>  <strong>{formatSlotTimeRange(apptDetail.saat)}</strong></div>
                   <div className="appt-info-row"><span>Spor:</span>  <strong>{apptDetail.kategori === 'basketbol' ? '🏀 Basketbol' : '🏐 Voleybol'}</strong></div>
                   <div className="appt-info-row"><span>Durum:</span>
                     <span className={`appt-status-badge ${isPast ? 'past' : 'upcoming'}`}>{isPast ? 'Geçmiş' : 'Yakında'}</span>
@@ -1576,7 +1576,7 @@ export default function AdminDashboardPage() {
                       <strong>Yedeklenen Randevular ({backedUpAppointments.length} adet):</strong>
                       <ul style={{ paddingLeft: '18px', marginTop: '6px', marginBottom: '0', color: 'var(--gray-300)' }}>
                         {backedUpAppointments.slice(0, 10).map((a, i) => (
-                          <li key={i}>📅 {a.tarih} — Saat {String(a.saat).padStart(2, '0')}:00 ({a.kategori === 'basketbol' ? '🏀 Basketbol' : '🏐 Voleybol'})</li>
+                          <li key={i}>📅 {a.tarih} — Saat {formatSlotStartHour(a.saat)} ({a.kategori === 'basketbol' ? '🏀 Basketbol' : '🏐 Voleybol'})</li>
                         ))}
                         {backedUpAppointments.length > 10 && <li>... ve {backedUpAppointments.length - 10} adet daha.</li>}
                       </ul>

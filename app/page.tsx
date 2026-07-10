@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { TURKISH_DAYS, TURKISH_MONTHS, formatDate, getActiveWeekMonday, isWeekTransitionPreview, isBookingEnabled, getTimeUntilBookingOpen, getWeekDaysFromMonday } from '@/utils/constants';
+import { TURKISH_DAYS, TURKISH_MONTHS, formatDate, getActiveWeekMonday, isWeekTransitionPreview, isBookingEnabled, getTimeUntilBookingOpen, getWeekDaysFromMonday, formatSlotTimeRange, formatSlotStartHour } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -518,7 +518,7 @@ export default function CalendarPage() {
                         className={`slot-card ${finalUnavailable ? 'slot-taken' : 'slot-available'}`}
                         onClick={() => { if (!finalUnavailable) openSlotModal(day, hour); }}
                       >
-                        <div className="slot-time">{String(hour).padStart(2, '0')}:00 – {String(hour + 1).padStart(2, '0')}:00</div>
+                        <div className="slot-time">{formatSlotTimeRange(hour)}</div>
                         <div className="slot-status desktop-only-badge">
                           <span className={`status-badge ${badgeClass}`}>{badgeText}</span>
                         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { TURKISH_DAYS, TURKISH_MONTHS, formatDate, getActiveWeekMonday, isBookingEnabled, getWeekDaysFromMonday, validateTC } from '@/utils/constants';
+import { TURKISH_DAYS, TURKISH_MONTHS, formatDate, getActiveWeekMonday, isBookingEnabled, getWeekDaysFromMonday, validateTC, formatSlotStartHour } from '@/utils/constants';
 
 
 
@@ -118,7 +118,7 @@ export default function EditAppointmentModal({
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize: '13px', color: 'var(--gray-500)', fontWeight: 500, textTransform: 'uppercase' }}>Randevu Bilgisi</span>
             <span style={{ fontSize: '16px', color: 'var(--gray-800)', fontWeight: 600 }}>
-              {displayDate} — {String(appointment.saat).padStart(2, '0')}:00
+              {displayDate} — {formatSlotStartHour(appointment.saat)}
             </span>
           </div>
           <div style={{ width: '1px', height: '30px', background: 'var(--gray-300)' }}></div>

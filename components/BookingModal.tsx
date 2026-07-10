@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { TURKISH_DAYS, TURKISH_MONTHS, formatDate, isBookingEnabled, getActiveWeekMonday, validateTC } from '@/utils/constants';
+import { TURKISH_DAYS, TURKISH_MONTHS, formatDate, isBookingEnabled, getActiveWeekMonday, validateTC, formatSlotStartHour } from '@/utils/constants';
 
 export default function BookingModal({ 
   isOpen, 
@@ -158,7 +158,7 @@ export default function BookingModal({
       <div className="modal" onClick={e => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose} disabled={bookingLoading}>✕</button>
         <h2 className="modal-title">Randevu Oluştur</h2>
-        <p className="modal-subtitle">{dayName}, {displayDate} — {String(selectedHour).padStart(2, '0')}:00</p>
+        <p className="modal-subtitle">{dayName}, {displayDate} — {formatSlotStartHour(selectedHour)}</p>
         
         <div className="steps-indicator">
           <div className={`step ${step >= 1 ? 'active' : ''}`}><div className="step-circle">1</div><span>Branş</span></div>

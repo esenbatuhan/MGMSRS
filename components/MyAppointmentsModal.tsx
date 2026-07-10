@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { TURKISH_DAYS, TURKISH_MONTHS } from '@/utils/constants';
+import { TURKISH_DAYS, TURKISH_MONTHS, formatSlotTimeRange } from '@/utils/constants';
 
 function isEditable(tarihStr: string, saatInt: number) {
   const now = new Date();
@@ -157,7 +157,7 @@ export default function MyAppointmentsModal({
                       <div className="randevu-day">{gunLabel}</div>
                     </div>
                     <div className="randevu-card-body">
-                      <div className="randevu-time">⏰ {String(a.saat).padStart(2, '0')}:00 – {String(a.saat + 1).padStart(2, '0')}:00</div>
+                      <div className="randevu-time">⏰ {formatSlotTimeRange(a.saat)}</div>
                       <div className="randevu-cat">{a.kategori === 'basketbol' ? '🏀 Basketbol' : '🏐 Voleybol'}</div>
                     </div>
                     <div className={`randevu-badge ${a.is_archived ? 'badge-archive' : (isPast ? 'badge-past' : 'badge-upcoming')}`}>

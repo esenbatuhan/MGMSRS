@@ -126,3 +126,18 @@ export function validateTC(tc: string): boolean {
   
   return true;
 }
+
+export function formatSlotTimeRange(hour: number): string {
+  if (hour === 22) {
+    return '22:30 – 23:30';
+  }
+  return `${String(hour).padStart(2, '0')}:00 – ${String(hour + 1).padStart(2, '0')}:00`;
+}
+
+export function formatSlotStartHour(hour: number): string {
+  if (hour === 22) {
+    return '22:30';
+  }
+  return `${String(hour).padStart(2, '0')}:00`;
+}
+
