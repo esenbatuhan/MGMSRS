@@ -1148,7 +1148,9 @@ export default function AdminDashboardPage() {
           <div className="ag-row ag-header-row">
             <div className="ag-day-cell ag-header-cell">Gün / Saat</div>
             {HOURS.map(h => (
-              <div key={h} className="ag-slot-cell ag-header-cell">{h === 22 ? '22:00 / 22:30' : formatSlotStartHour(h)}</div>
+              <div key={h} className="ag-slot-cell ag-header-cell" style={h === 22 ? { fontSize: '9px', lineHeight: '1.2' } : {}}>
+                {h === 22 ? '22:30-23:30 / 22:00-23:00' : formatSlotStartHour(h)}
+              </div>
             ))}
           </div>
 
