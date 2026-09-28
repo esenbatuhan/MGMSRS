@@ -58,9 +58,10 @@ export default function EditAppointmentModal({
   const saveEditAppt = async () => {
     if (!appointment.id) return;
     
+    const totalCount = appointment.kategori === 'voleybol' ? 12 : 10;
     const filledMembers = teamMembers.filter(m => m.ad?.trim() && m.soyad?.trim() && m.tc_no?.trim() && m.dogum_tarihi?.trim() && m.telefon?.trim());
-    if (filledMembers.length < 7) {
-      showToast('En az 8 kişinin tüm bilgilerinin eksiksiz girilmesi zorunludur.', 'error');
+    if (filledMembers.length < teamMembers.length) {
+      showToast(`${appointment.kategori === 'voleybol' ? 'Voleybol' : 'Basketbol'} için tüm katılımcıların (${totalCount} kişi) bilgilerinin eksiksiz girilmesi zorunludur.`, 'error');
       return;
     }
 
@@ -136,10 +137,11 @@ export default function EditAppointmentModal({
           </div>
         )}
 
+        <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '14px', color: 'var(--text-dark)' }}>Takım Listesi ({appointment.kategori === 'basketbol' ? '10' : '12'} Kişi)</h3>
         {editable && (
           <div style={{ marginBottom: '15px', padding: '8px 12px', backgroundColor: '#fff3cd', border: '1px solid #ffe69c', color: '#664d03', borderRadius: '6px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontSize: '16px' }}>⚠️</span>
-            <span>En az 8 kişinin tüm bilgilerinin eksiksiz girilmesi zorunludur.</span>
+            <span>{appointment.kategori === 'voleybol' ? 'Voleybol (12 kişi)' : 'Basketbol (10 kişi)'} için tüm katılımcıların bilgilerinin eksiksiz girilmesi zorunludur.</span>
           </div>
         )}
 

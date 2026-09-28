@@ -70,9 +70,10 @@ export default function BookingModal({
       return;
     }
 
+    const totalCount = selectedCategory === 'voleybol' ? 12 : 10;
     const filledMembers = teamMembers.filter(m => m.ad.trim() !== '' && m.soyad.trim() !== '' && m.tc_no.trim() !== '' && m.dogum_tarihi.trim() !== '' && m.telefon.trim() !== '');
-    if (filledMembers.length < 7) {
-      showToast('En az 8 kişinin tüm bilgilerinin eksiksiz girilmesi zorunludur.', 'error');
+    if (filledMembers.length < teamMembers.length) {
+      showToast(`${selectedCategory === 'voleybol' ? 'Voleybol' : 'Basketbol'} için tüm katılımcıların (${totalCount} kişi) bilgilerinin eksiksiz girilmesi zorunludur.`, 'error');
       return;
     }
 
@@ -198,7 +199,7 @@ export default function BookingModal({
             <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '14px', color: 'var(--text-dark)' }}>Takım Listesi ({selectedCategory === 'basketbol' ? '10' : '12'} Kişi)</h3>
             <div style={{ marginBottom: '15px', padding: '8px 12px', backgroundColor: '#fff3cd', border: '1px solid #ffe69c', color: '#664d03', borderRadius: '6px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '16px' }}>⚠️</span>
-              <span>En az 8 kişinin tüm bilgilerinin eksiksiz girilmesi zorunludur.</span>
+              <span>{selectedCategory === 'voleybol' ? 'Voleybol (12 kişi)' : 'Basketbol (10 kişi)'} için tüm katılımcıların bilgilerinin eksiksiz girilmesi zorunludur.</span>
             </div>
             <div className="team-list">
               <div className="team-member-card row-owner">

@@ -4,7 +4,7 @@ async function fetchSchema() {
   try {
     const url = 'https://wybecyucsxyscihboxwp.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5YmVjeXVjc3h5c2NpaGJveHdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTUyMjc4ODMsImV4cCI6MjAyODgyMzg4M30.YOUR_ANON_KEY';
     // Let me parse .env.local to get the real anon key
-    const env = fs.readFileSync('c:/Users/esenb/Desktop/MGMSRS-main/.env.local', 'utf-8');
+    const env = fs.readFileSync('.env.local', 'utf-8');
     const anonKeyMatch = env.match(/NEXT_PUBLIC_SUPABASE_ANON_KEY=(.*)/);
     const apiUrlMatch = env.match(/NEXT_PUBLIC_SUPABASE_URL=(.*)/);
     
